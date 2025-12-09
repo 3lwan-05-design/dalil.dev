@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dalil Lbrmja: HTML, CSS, JS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="icon" href="icon/3lwan_hybrid_poster.png">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            scroll-behavior: smooth;
+        }
+
+        /* Uiverse Card Style */
+        .uiverse-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .dark .uiverse-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .uiverse-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Resource Boxes (Top) */
+        .resource-box {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .resource-box:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Uiverse Button Style */
+        .uiverse-btn {
+            position: relative;
+            padding: 12px 35px;
+            background: #6366f1;
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 0 #fec1958c;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .uiverse-btn:hover {
+            background: #4f46e5;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .uiverse-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Language & Dark Mode Buttons */
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .control-btn.active {
+            background-color: #4f46e5;
+            color: white;
+        }
+        .control-btn:hover:not(.active) {
+            background-color: #e2e8f0;
+        }
+        .dark .control-btn:hover:not(.active) {
+            background-color: #334155;
+            color: white;
+        }
+
+        /* Animated Background Gradient */
+        .bg-animated {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .dark .bg-animated {
+            opacity: 0.2;
+            background: linear-gradient(-45deg, #1e1b4b, #312e81, #1e293b, #0f172a);
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .code-block {
+            direction: ltr; 
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Result Box Style */
+        .result-preview {
+            background-color: white;
+            border: 2px dashed #cbd5e1;
+            color: #334155;
+        }
+        .dark .result-preview {
+            background-color: #1e293b;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+    <div class="bg-animated"></div>
+
+    <!-- Navbar -->
+    <nav class="container mx-auto px-4 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50 backdrop-blur-md bg-white/70 dark:bg-slate-900/70 rounded-b-xl shadow-sm">
+        <a href="#" onclick="location.reload()" class="flex items-center gap-3 font-bold text-xl text-indigo-600 dark:text-indigo-400 hover:scale-105 transition-transform cursor-pointer">
+            <img src="icon/3lwan_hybrid_poster.png" alt="Dalil Logo" class="w-10 h-10 rounded-full object-cover border-2 border-indigo-200 dark:border-indigo-800">
+            <span>Dalil<span class="text-slate-600 dark:text-slate-300">.Dev</span></span>
+        </a>
+        
+        <div class="flex gap-2 items-center">
+            <div class="flex bg-slate-200 dark:bg-slate-800 rounded-full p-1">
+                <button onclick="setLanguage('en')" class="control-btn text-sm" id="btn-en">EN</button>
+                <button onclick="setLanguage('fr')" class="control-btn text-sm" id="btn-fr">FR</button>
+                <button onclick="setLanguage('ar')" class="control-btn active text-sm" id="btn-ar">AR</button>
+            </div>
+            
+            <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                <svg id="moon-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 24.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <svg id="sun-icon" class="w-5 h-5 block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="container mx-auto px-4 py-8 text-center">
+        <h1 class="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-600" data-i18n="title">
+            دليل تطوير الويب
+        </h1>
+        <p class="text-slate-600 dark:text-slate-400 text-xl max-w-2xl mx-auto mb-8" data-i18n="subtitle">
+            تعلم أساسيات HTML و CSS و JavaScript مع هذا الدليل التفاعلي.
+        </p>
+
+        <!-- Navigation Boxes (Internal Links) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <!-- HTML Box -->
+            <a href="#html-section" class="resource-box block p-6 bg-orange-100 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl hover:shadow-lg hover:shadow-orange-500/20 group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">📄</div>
+                <h3 class="text-xl font-bold text-orange-700 dark:text-orange-400">HTML</h3>
+                <p class="text-sm text-orange-600 dark:text-orange-300 mt-1 opacity-70" data-i18n="scrollText">اضغط للذهاب</p>
+            </a>
+
+            <!-- CSS Box -->
+            <a href="#css-section" class="resource-box block p-6 bg-blue-100 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl hover:shadow-lg hover:shadow-blue-500/20 group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">🎨</div>
+                <h3 class="text-xl font-bold text-blue-700 dark:text-blue-400">CSS</h3>
+                <p class="text-sm text-blue-600 dark:text-blue-300 mt-1 opacity-70" data-i18n="scrollText">اضغط للذهاب</p>
+            </a>
+
+            <!-- JS Box -->
+            <a href="#js-section" class="resource-box block p-6 bg-yellow-100 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl hover:shadow-lg hover:shadow-yellow-500/20 group">
+                <div class="text-4xl mb-2 group-hover:scale-110 transition-transform">⚡</div>
+                <h3 class="text-xl font-bold text-yellow-700 dark:text-yellow-400">JS</h3>
+                <p class="text-sm text-yellow-600 dark:text-yellow-300 mt-1 opacity-70" data-i18n="scrollText">اضغط للذهاب</p>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 space-y-8 max-w-5xl">
+
+        <!-- HTML Section -->
+        <section id="html-section" class="uiverse-card p-8 scroll-mt-24">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center text-orange-600 text-2xl font-bold shadow-sm">
+                    &lt;/&gt;
+                </div>
+                <h2 class="text-3xl font-bold text-slate-800 dark:text-white" data-i18n="htmlTitle">HTML (الهيكل)</h2>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed text-lg" data-i18n="htmlDesc">
+                HTML هي لغة التوصيف القياسية لصفحات الويب. هي التي تبني الهيكل الأساسي للصفحة مثل العناوين والفقرات.
+            </p>
+            <div class="bg-slate-900 rounded-xl p-6 code-block shadow-inner overflow-x-auto border border-slate-700 mb-4">
+                <code class="text-sm font-mono text-green-400">
+                    &lt;!-- Code --&gt;<br>
+                    &lt;div class="card"&gt;<br>
+                    &nbsp;&nbsp;&lt;h1&gt;Marhba!&lt;/h1&gt;<br>
+                    &nbsp;&nbsp;&lt;p&gt;This is an HTML card.&lt;/p&gt;<br>
+                    &nbsp;&nbsp;&lt;button&gt;Click Here&lt;/button&gt;<br>
+                    &lt;/div&gt;
+                </code>
+            </div>
+            <!-- HTML Result -->
+            <div class="relative">
+                <span class="absolute -top-3 left-4 px-2 bg-white dark:bg-slate-800 text-xs font-bold text-slate-400 border border-slate-200 dark:border-slate-700 rounded-full" data-i18n="resultLabel">النتيجة</span>
+                <div class="result-preview p-6 rounded-xl flex flex-col items-start gap-3">
+                    <h1 class="text-2xl font-bold">Marhba!</h1>
+                    <p>This is an HTML card.</p>
+                    <button class="bg-gray-200 px-3 py-1 rounded border border-gray-400 text-sm">Click Here</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CSS Section -->
+        <section id="css-section" class="uiverse-card p-8 scroll-mt-24">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-blue-600 text-2xl font-bold shadow-sm">
+                    #
+                </div>
+                <h2 class="text-3xl font-bold text-slate-800 dark:text-white" data-i18n="cssTitle">CSS (التصميم)</h2>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed text-lg" data-i18n="cssDesc">
+                CSS هي المسؤولة عن جمالية الصفحة. تتحكم في الألوان، الخطوط، وتخطيط العناصر لتظهر بشكل جيد.
+            </p>
+            <div class="bg-slate-900 rounded-xl p-6 code-block shadow-inner overflow-x-auto border border-slate-700 mb-4">
+                <code class="text-sm font-mono text-blue-300">
+                    /* Card Style */<br>
+                    .card {<br>
+                    &nbsp;&nbsp;background: #f8fafc;<br>
+                    &nbsp;&nbsp;padding: 20px;<br>
+                    &nbsp;&nbsp;border-radius: 12px;<br>
+                    &nbsp;&nbsp;text-align: center;<br>
+                    }<br>
+                    /* Button Style */<br>
+                    button {<br>
+                    &nbsp;&nbsp;background: #6366f1;<br>
+                    &nbsp;&nbsp;color: white;<br>
+                    }
+                </code>
+            </div>
+            <!-- CSS Result -->
+            <div class="relative">
+                <span class="absolute -top-3 left-4 px-2 bg-white dark:bg-slate-800 text-xs font-bold text-slate-400 border border-slate-200 dark:border-slate-700 rounded-full" data-i18n="resultLabel">النتيجة</span>
+                <div class="result-preview p-6 rounded-xl">
+                    <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; text-align: center; max-width: 200px; margin: 0 auto; border: 1px solid #e2e8f0;">
+                        <h3 class="font-bold mb-2">Styled Card</h3>
+                        <button style="background: #6366f1; color: white; padding: 6px 12px; border-radius: 6px; border:none;">Styled Button</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JS Section -->
+        <section id="js-section" class="uiverse-card p-8 scroll-mt-24">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="w-14 h-14 bg-yellow-100 dark:bg-yellow-900/30 rounded-2xl flex items-center justify-center text-yellow-600 text-2xl font-bold shadow-sm">
+                    { }
+                </div>
+                <h2 class="text-3xl font-bold text-slate-800 dark:text-white" data-i18n="jsTitle">JavaScript (التفاعلية)</h2>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed text-lg" data-i18n="jsDesc">
+                JavaScript هي عقل الصفحة. تجعل الموقع تفاعلياً وديناميكياً (مثل ضغط الأزرار والتحركات).
+            </p>
+            
+            <div class="bg-slate-900 rounded-xl p-6 mb-4 code-block shadow-inner overflow-x-auto border border-slate-700">
+                <code class="text-sm font-mono text-yellow-200">
+                    // Function to change text<br>
+                    function handleClick() {<br>
+                    &nbsp;&nbsp;const text = "Wow! Rak nady.";<br>
+                    &nbsp;&nbsp;typewriter(text);<br>
+                    &nbsp;&nbsp;changeColor();<br>
+                    }
+                </code>
+            </div>
+
+            <!-- JS Result -->
+            <div class="relative">
+                <span class="absolute -top-3 left-4 px-2 bg-white dark:bg-slate-800 text-xs font-bold text-slate-400 border border-slate-200 dark:border-slate-700 rounded-full" data-i18n="resultLabel">النتيجة</span>
+                <div class="result-preview p-6 rounded-xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-800/50 border-0" id="demo-area">
+                    <div class="text-center">
+                        <p id="demo-text" class="text-lg font-bold text-slate-700 dark:text-slate-200 mb-6 min-h-[3rem] flex items-center justify-center" data-i18n="demoText">
+                            اضغط على الزر أدناه لتجربة JavaScript!
+                        </p>
+                        <button onclick="runInteraction()" class="uiverse-btn" data-i18n="btnLabel">
+                            اضغط هنا
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center mb-8">
+                <p class="text-slate-500 dark:text-slate-500 mb-2" data-i18n="footerText">صنع بحب للبرمجة</p>
+                <div class="text-3xl font-bold text-slate-800 dark:text-slate-200 tracking-widest uppercase mb-4">
+                    &mdash; <span class="text-indigo-600">3lwan</span> &mdash;
+                </div>
+            </div>
+
+            <!-- Bottom Bar: Layout adjusted for Corners -->
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-slate-200 dark:border-slate-700/50 pt-6">
+                
+                <!-- Copyright updated to 2025 -->
+                <p class="text-sm text-slate-400 mb-4 md:mb-0 order-2 md:order-1">&copy; 2025 All Rights Reserved.</p>
+
+                <!-- Dev Credit moved to "l9ont" (corner) -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm hover:scale-105 transition-transform order-1 md:order-2 mb-4 md:mb-0">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-xs font-semibold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+                        Dev: Elassal Alae
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Web Development Guide",
+                subtitle: "Master the basics of HTML, CSS, and JavaScript with this interactive guide.",
+                scrollText: "Go to section",
+                htmlTitle: "HTML (Structure)",
+                htmlDesc: "HTML is the skeleton of the website. We use tags like <div>, <h1>, and <button>.",
+                cssTitle: "CSS (Style)",
+                cssDesc: "CSS controls colors, fonts, and layout like padding and borders.",
+                jsTitle: "JavaScript (Interactivity)",
+                jsDesc: "JavaScript adds logic. It can change text and colors dynamically.",
+                demoText: "Click the button below to see JavaScript in action!",
+                btnLabel: "Click Me",
+                resultLabel: "Result",
+                footerText: "Made with passion for coding",
+                messages: ["Great job! You are running JS code."]
+            },
+            fr: {
+                title: "Guide de Développement Web",
+                subtitle: "Maîtrisez les bases du HTML, CSS et JavaScript.",
+                scrollText: "Aller à la section",
+                htmlTitle: "HTML (Structure)",
+                htmlDesc: "HTML est le squelette du site. Nous utilisons des balises comme <div>, <h1> et <button>.",
+                cssTitle: "CSS (Style)",
+                cssDesc: "Le CSS gère la mise en page, les couleurs et les bordures.",
+                jsTitle: "JavaScript (Logique)",
+                jsDesc: "JavaScript permet de créer du contenu interactif et changer les couleurs.",
+                demoText: "Cliquez sur le bouton ci-dessous !",
+                btnLabel: "Cliquez ici",
+                resultLabel: "Résultat",
+                footerText: "Fait avec passion pour le code",
+                messages: ["Bravo ! Vous exécutez du code JS."]
+            },
+            ar: {
+                title: "دليل تطوير الويب",
+                subtitle: "تعلم أساسيات HTML و CSS و JavaScript مع هذا الدليل التفاعلي.",
+                scrollText: "اضغط للذهاب",
+                htmlTitle: "HTML (الهيكل)",
+                htmlDesc: "HTML هي الهيكل الأساسي للصفحة. نستخدم وسوم مثل العناوين والأزرار.",
+                cssTitle: "CSS (التصميم)",
+                cssDesc: "CSS هي المسؤولة عن جمالية الصفحة، الألوان، الحواف (Borders)، والمساحات.",
+                jsTitle: "JavaScript (التفاعلية)",
+                jsDesc: "JavaScript هي عقل الصفحة. يمكنها تغيير النصوص والألوان بضغطة زر.",
+                demoText: "اضغط على الزر أدناه لتجربة JavaScript!",
+                btnLabel: "اضغط هنا",
+                resultLabel: "النتيجة",
+                footerText: "صنع بحب للبرمجة",
+                messages: ["عمل رائع! أنت تشغل كود JS الآن."]
+            }
+        };
+
+        let currentLang = 'ar';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            const elements = document.querySelectorAll('[data-i18n]');
+            
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.body.style.fontFamily = "'Tajawal', sans-serif";
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.body.style.fontFamily = "'Poppins', sans-serif";
+            }
+
+            document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+        }
+
+        let typingTimeout;
+        function runInteraction() {
+            const textElement = document.getElementById('demo-text');
+            const msgs = translations[currentLang].messages;
+            const randomMsg = msgs[0];
+            
+            clearTimeout(typingTimeout);
+            textElement.innerHTML = ''; 
+            textElement.className = "text-lg font-bold text-indigo-600 dark:text-indigo-400 mb-6 min-h-[3rem] flex items-center justify-center transition-all duration-300 typing-cursor";
+            textElement.style.opacity = '1';
+
+            let i = 0;
+            const speed = 50;
+
+            function typeWriter() {
+                if (i < randomMsg.length) {
+                    textElement.innerHTML += randomMsg.charAt(i);
+                    i++;
+                    typingTimeout = setTimeout(typeWriter, speed);
+                } else {
+                    textElement.classList.remove('typing-cursor');
+                }
+            }
+            typeWriter();
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const sun = document.getElementById('sun-icon');
+            const moon = document.getElementById('moon-icon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                sun.classList.remove('hidden');
+                moon.classList.add('hidden');
+            } else {
+                html.classList.add('dark');
+                sun.classList.add('hidden');
+                moon.classList.remove('hidden');
+            }
+        }
+
+        setLanguage('ar'); 
+    </script>
+</body>
+</html>
